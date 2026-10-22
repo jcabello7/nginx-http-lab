@@ -54,7 +54,7 @@ function backendSnapshot(): array
 {
     return [
         'name' => (string) $_SERVER['DEBUG_BACKEND_NAME'],
-        'app_version' => '1.0.0-canary',
+        'app_version' => '1.1.0',
         'server_addr' => (string) $_SERVER['SERVER_ADDR'],
         'server_port' => (string) $_SERVER['SERVER_PORT'],
         'peer_addr' => (string) $_SERVER['REMOTE_ADDR'],
