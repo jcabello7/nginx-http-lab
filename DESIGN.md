@@ -29,6 +29,11 @@ disabled, and long-value states are part of each relevant primitive.
 ## 6. Interaction
 No decorative motion. Keep initial navigation evidence distinct from each new
 same-origin browser probe. Use native keyboard controls and respect reduced motion.
+Open in Basic mode on every page load: header, connection summary, and inbound
+request only. A visible Basic/Advanced button group in the header reveals the
+composer, browser response, comparison, and original JSON evidence in Advanced.
+Switching modes only changes visibility; it preserves probe inputs and results.
+Basic uses a full-width inbound card. Hidden panels are absent from keyboard focus.
 
 ## 7. Depth
 Use the inherited light-card surface, subtle shadow, and inset code panels. No remote

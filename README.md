@@ -10,6 +10,10 @@ the response headers visible to Fetch.
 
 ## Features
 
+- Basic mode by default: connection summary followed directly by the inbound
+  request. The header's Basic/Advanced controls reveal the full probe and response
+  comparison interface without discarding inputs or previous results. Reloading
+  the page starts in Basic again.
 - Initial navigation snapshot kept separate from subsequent browser probes.
 - Full, unredacted request headers, raw and parsed cookies, and request bodies up to
   1 MiB. Binary request bodies are represented as base64.
@@ -28,9 +32,11 @@ the response headers visible to Fetch.
 - PHP 8.1+ with PHP-FPM.
 - nginx configured to route application paths to `index.php` and serve
   `/_debug/assets/` from the local `assets/` directory.
-- Set `DEBUG_BACKEND_NAME` in the PHP-FPM environment to identify the origin.
+- Pass `DEBUG_BACKEND_NAME` as an nginx FastCGI parameter to identify the origin.
   Optional `DEBUG_TLS_PROTOCOL`, `DEBUG_TLS_CIPHER`, and `DEBUG_TLS_SNI` values can
   be passed from nginx when the TLS connection terminates there.
+- Disable PHP's `enable_post_data_reading` for these routes to preserve raw
+  multipart bodies, and configure nginx's request-body limit to 1 MiB.
 
 This app does not configure nginx, TLS certificates, DNS, reverse proxies, or
 Cloudflare. The deployment must keep the static asset path and PHP front controller
@@ -50,16 +56,19 @@ available on the intended test routes.
 | `/test/cache?ttl=60` | Adds a cache policy for testing; TTL must be 0–3600 seconds. |
 | `/healthz` | Returns `200 ok` when nginx is listening. It is nginx liveness, not PHP-FPM readiness. |
 
-## Development smoke test
+## Deployment smoke checks
 
-Run PHP's local server from the application directory and set a backend name:
+After configuring nginx/PHP-FPM and your test hostname, check the served routes:
 
 ```bash
-DEBUG_BACKEND_NAME=local php -S 127.0.0.1:8080 -t . index.php
+curl --include https://your-test-origin.example/healthz
+curl --include https://your-test-origin.example/inspect
+curl --include https://your-test-origin.example/test/status/418
 ```
 
-For full browser behavior, configure nginx/PHP-FPM so paths reach the front
-controller and the local asset directory is served under `/_debug/assets/`.
+The repository is application source, not a standalone web-server image. A bare
+PHP development-server router does not provide the nginx asset aliases, FastCGI
+metadata, or nginx-only liveness endpoint needed by the complete UI.
 
 ## Browser visibility and comparison limits
 
