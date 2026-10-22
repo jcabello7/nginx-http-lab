@@ -29,7 +29,8 @@ the response headers visible to Fetch.
 
 ## Requirements
 
-- PHP 8.1+ with PHP-FPM.
+- PHP-FPM at a release patched for CVE-2026-109618 and CVE-2026-109619:
+  PHP 8.5.12+, 8.4.27+, 8.3.36+, or 8.2.35+.
 - nginx configured to route application paths to `index.php` and serve
   `/_debug/assets/` from the local `assets/` directory.
 - Pass `DEBUG_BACKEND_NAME` as an nginx FastCGI parameter to identify the origin.
@@ -69,6 +70,8 @@ curl --include https://your-test-origin.example/test/status/418
 The repository is application source, not a standalone web-server image. A bare
 PHP development-server router does not provide the nginx asset aliases, FastCGI
 metadata, or nginx-only liveness endpoint needed by the complete UI.
+
+The fixed release levels are published in the [PHP security announcement](https://www.php.net/archive/2026.php#2026-10-21-5).
 
 ## Browser visibility and comparison limits
 
