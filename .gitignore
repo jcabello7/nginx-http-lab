@@ -1,0 +1,6 @@
+.env
+.env.*
+*.har
+*.pcap
+*.pcapng
+http-lab-*.json
