@@ -8,6 +8,14 @@ setText('initial-json', pretty(initial));
 renderSnapshot(initial, evidenceLabel);
 renderBrowser(null);
 
+const viewModeButtons = document.querySelectorAll('.view-mode button');
+viewModeButtons.forEach((button) => button.addEventListener('click', () => {
+  const mode = button.dataset.viewMode;
+  document.body.dataset.viewMode = mode;
+  document.querySelectorAll('[data-advanced-only]').forEach((panel) => { panel.hidden = mode !== 'advanced'; });
+  viewModeButtons.forEach((candidate) => { candidate.setAttribute('aria-pressed', String(candidate === button)); });
+}));
+
 function status(message, type = '') {
   setText('probe-status', message); byId('probe-status').className = `status small ${type}`;
 }
