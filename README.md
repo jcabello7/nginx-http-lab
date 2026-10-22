@@ -8,6 +8,8 @@ query parameters, and the complete request body. It can also issue a new same-or
 browser probe and compare application-defined response status and headers against
 the response headers visible to Fetch.
 
+The application reports version `1.1.0` in its origin snapshot.
+
 ## Features
 
 - Basic mode by default: connection summary followed directly by the inbound
