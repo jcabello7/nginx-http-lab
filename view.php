@@ -8,13 +8,18 @@
   <link rel="stylesheet" href="/_debug/assets/app.css">
   <script type="module" src="/_debug/assets/app.js"></script>
 </head>
-<body>
+<body data-view-mode="basic">
 <a class="skip-link" href="#main">Skip to inspector</a>
 <div class="page">
   <header class="masthead">
-    <div><p class="eyebrow">HTTP LAB</p><h1>See what the request really sends.</h1>
+    <div><h1>HTTP Lab</h1>
       <p class="muted">Inspect what reaches the origin and what the browser receives after the proxy.</p></div>
-    <div class="identity"><span class="badge" id="backend-name">nginx_test1</span><span class="small muted">Canary · backend 1 only</span></div>
+    <div class="identity"><span class="badge" id="backend-name">nginx_test1</span><span class="small muted">Canary · backend 1 only</span>
+      <div class="view-mode" role="group" aria-label="View mode">
+        <button type="button" id="view-mode-basic" data-view-mode="basic" aria-pressed="true" aria-controls="probe-panel outbound-panel comparison-panel initial-evidence">Basic</button>
+        <button type="button" id="view-mode-advanced" data-view-mode="advanced" aria-pressed="false" aria-controls="probe-panel outbound-panel comparison-panel initial-evidence">Advanced</button>
+      </div>
+    </div>
   </header>
   <aside class="notice" aria-label="Diagnostic scope">
     <strong>Unredacted debug mode.</strong> Headers, cookies and bodies are shown in full. There is no persistent history or automatic upload of browser observations.
@@ -27,7 +32,7 @@
       <div class="stat"><span class="small muted">ORIGIN REQUEST ID</span><strong id="summary-id">—</strong></div>
     </section>
 
-    <section class="card composer" aria-labelledby="composer-title">
+    <section id="probe-panel" class="card composer" aria-labelledby="composer-title" data-advanced-only hidden>
       <div class="section-heading"><div><p class="eyebrow">01 / PROBE</p><h2 id="composer-title">Send a new request</h2></div><span class="badge neutral">Same-origin</span></div>
       <p class="small muted">This probe is separate from the initial navigation and may reach a different backend. Only same-origin paths are allowed.</p>
       <form id="probe-form">
@@ -66,7 +71,7 @@
         <details open><summary>Request body</summary><pre id="request-body-view"></pre></details>
         <details><summary>Actual connection and forwarding headers</summary><pre id="request-connection"></pre></details>
       </section>
-      <section class="card" aria-labelledby="client-title">
+      <section id="outbound-panel" class="card" aria-labelledby="client-title" data-advanced-only hidden>
         <div class="section-heading"><div><p class="eyebrow">03 / OUTBOUND</p><h2 id="client-title">Response visible to this browser</h2></div><span id="client-code" class="badge neutral">No probe yet</span></div>
         <p class="hint">Captured with Fetch in your browser. This is not a complete wire capture and is never uploaded automatically.</p>
         <div id="client-summary" class="key-values"></div>
@@ -76,13 +81,13 @@
       </section>
     </div>
 
-    <section class="card" aria-labelledby="comparison-title">
+    <section id="comparison-panel" class="card" aria-labelledby="comparison-title" data-advanced-only hidden>
       <div class="section-heading"><div><p class="eyebrow">04 / COMPARISON</p><h2 id="comparison-title">Origin intent vs. browser observation</h2></div><span id="comparison-count" class="small muted">No comparison yet</span></div>
       <p id="comparison-note" class="hint">The reference covers application-defined status and headers, before nginx/Cloudflare. A difference alone does not identify which layer produced it.</p>
       <div class="table-scroll" role="region" aria-label="Header comparison" tabindex="0"><table><thead><tr><th scope="col">Field</th><th scope="col">Application reference</th><th scope="col">Visible to client</th><th scope="col">Result</th></tr></thead><tbody id="comparison-body"><tr><td colspan="4">Run a probe to compare the same transaction.</td></tr></tbody></table></div>
       <p class="hint">Fetch cannot read Set-Cookie, even when the browser applies it. Additional headers may come from nginx or the proxy. Use DevTools or curl to verify Set-Cookie.</p>
     </section>
-    <details class="card"><summary>Original navigation evidence · full JSON</summary><pre id="initial-json"></pre></details>
+    <details id="initial-evidence" class="card" data-advanced-only hidden><summary>Original navigation evidence · full JSON</summary><pre id="initial-json"></pre></details>
   </main>
   <footer class="small muted">HTTP Lab · nginx_test1 canary · no external assets · No-store by default; a Cloudflare rule can override it.</footer>
 </div>
