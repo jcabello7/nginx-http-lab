@@ -14,7 +14,7 @@
   <header class="masthead">
     <div><h1>HTTP Lab</h1>
       <p class="muted">Inspect what reaches the origin and what the browser receives after the proxy.</p></div>
-    <div class="identity"><span class="badge" id="backend-name">nginx_test1</span><span class="small muted">Canary · backend 1 only</span>
+    <div class="identity"><span class="badge" id="backend-name">nginx_test1</span><span class="small muted">Origin inspection</span>
       <div class="view-mode" role="group" aria-label="View mode">
         <button type="button" id="view-mode-basic" data-view-mode="basic" aria-pressed="true" aria-controls="probe-panel outbound-panel comparison-panel initial-evidence">Basic</button>
         <button type="button" id="view-mode-advanced" data-view-mode="advanced" aria-pressed="false" aria-controls="probe-panel outbound-panel comparison-panel initial-evidence">Advanced</button>
@@ -42,7 +42,7 @@
           <button class="primary" id="run-probe" type="submit">Run probe</button>
         </div>
         <div class="editor-grid">
-          <div><label for="request-headers">Headers requested from the browser · JSON</label><textarea id="request-headers" rows="5" spellcheck="false">{"X-Debug-Test":"canary"}</textarea><p class="hint">Host, Cookie and other reserved headers cannot be set with Fetch. Use curl for those cases.</p></div>
+          <div><label for="request-headers">Headers requested from the browser · JSON</label><textarea id="request-headers" rows="5" spellcheck="false">{"X-Debug-Test":"http-lab"}</textarea><p class="hint">Host, Cookie and other reserved headers cannot be set with Fetch. Use curl for those cases.</p></div>
           <div><label for="request-body">Body · unredacted text</label><textarea id="request-body" rows="5" spellcheck="false" placeholder='{"message":"debug"}' disabled></textarea><p class="hint">GET and HEAD do not send a body. Server limit: 1 MiB. Binary bodies are preserved as base64.</p></div>
         </div>
         <details><summary>Request and response fixtures</summary><div class="fixture-list">
@@ -89,7 +89,7 @@
     </section>
     <details id="initial-evidence" class="card" data-advanced-only hidden><summary>Original navigation evidence · full JSON</summary><pre id="initial-json"></pre></details>
   </main>
-  <footer class="small muted">HTTP Lab · nginx_test1 canary · no external assets · No-store by default; a Cloudflare rule can override it.</footer>
+  <footer class="small muted">HTTP Lab · Basic mode by default · Advanced request/response inspection</footer>
 </div>
 <script id="initial-snapshot" type="application/json"><?= $snapshotJson ?></script>
 </body>
